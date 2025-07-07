@@ -3,6 +3,7 @@ package com.pismo.assessment.exception;
 import com.pismo.assessment.model.ErrorResponseModel;
 import com.pismo.assessment.model.FieldError;
 import com.pismo.assessment.model.ValidationErrorResponseModel;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @Operation(hidden = true)
     public ResponseEntity<ValidationErrorResponseModel> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
 
@@ -45,6 +47,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @Operation(hidden = true)
     public ResponseEntity<ValidationErrorResponseModel> handleConstraintViolationException(
             ConstraintViolationException ex) {
 
@@ -67,6 +70,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateAccountException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
+    @Operation(hidden = true)
     public ResponseEntity<ErrorResponseModel> handleDuplicateAccountException(
             DuplicateAccountException ex) {
 
@@ -81,6 +85,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @Operation(hidden = true)
     public ResponseEntity<ErrorResponseModel> handleAccountNotFoundException(
             AccountNotFoundException ex) {
 
@@ -95,6 +100,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidOperationTypeException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @Operation(hidden = true)
     public ResponseEntity<ErrorResponseModel> handleInvalidOperationTypeException(
             InvalidOperationTypeException ex) {
 
@@ -109,6 +115,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @Operation(hidden = true)
     public ResponseEntity<ErrorResponseModel> handleIllegalArgumentException(IllegalArgumentException ex) {
 
         ErrorResponseModel errorResponse = new ErrorResponseModel();
@@ -122,6 +129,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @Operation(hidden = true)
     public ResponseEntity<ErrorResponseModel> handleGeneralException(Exception ex) {
 
         ErrorResponseModel errorResponse = new ErrorResponseModel();
