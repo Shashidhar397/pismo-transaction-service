@@ -9,7 +9,7 @@ import java.util.List;
  * @author shashi
  */
 @Data
-public class ValidationErrorResponse {
+public class ValidationErrorResponseModel {
     private String message;
     private int status;
     private List<FieldError> fieldErrors;

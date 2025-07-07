@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * @author shashi
  */
 @Data
-public class ErrorResponse {
+public class ErrorResponseModel {
     private String message;
     private int status;
     private String error;

@@ -11,8 +11,9 @@ import lombok.Data;
 @Data
 public class Account {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id")
+    private Long accountId;
 
     @Column(name = "document_number", nullable = false, unique = true)
     private String documentNumber;

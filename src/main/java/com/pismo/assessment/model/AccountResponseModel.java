@@ -8,7 +8,7 @@ import lombok.Data;
  * @author shashi
  */
 @Data
-public class AccountResponse {
+public class AccountResponseModel {
 
     @JsonProperty("account_id")
     private Long accountId;
@@ -16,9 +16,9 @@ public class AccountResponse {
     @JsonProperty("document_number")
     private String documentNumber;
 
-    public static AccountResponse from(Account account) {
-        AccountResponse response = new AccountResponse();
-        response.accountId = account.getId();
+    public static AccountResponseModel from(Account account) {
+        AccountResponseModel response = new AccountResponseModel();
+        response.accountId = account.getAccountId();
         response.documentNumber = account.getDocumentNumber();
         return response;
     }

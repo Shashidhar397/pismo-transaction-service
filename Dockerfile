@@ -1,11 +1,16 @@
-# Build stage
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+# Development Dockerfile for hot-reload
+FROM maven:3.9.6-eclipse-temurin-17
 WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
 
-# Run stage
-FROM eclipse-temurin:17-jdk
-VOLUME /tmp
-COPY --from=build /app/target/pismo-transaction-service-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+# Copy pom.xml and download dependencies first (for better caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy the rest of the source code
+COPY src ./src
+
+# Expose port (default Spring Boot port)
+EXPOSE 8080
+
+# Run in dev mode with hot reload
+ENTRYPOINT ["mvn", "spring-boot:run"]

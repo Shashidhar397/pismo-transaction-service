@@ -1,8 +1,8 @@
 package com.pismo.assessment.exception;
 
-import com.pismo.assessment.model.ErrorResponse;
+import com.pismo.assessment.model.ErrorResponseModel;
 import com.pismo.assessment.model.FieldError;
-import com.pismo.assessment.model.ValidationErrorResponse;
+import com.pismo.assessment.model.ValidationErrorResponseModel;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ValidationErrorResponse> handleValidationExceptions(
+    public ResponseEntity<ValidationErrorResponseModel> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
 
-        ValidationErrorResponse errorResponse = new ValidationErrorResponse();
+        ValidationErrorResponseModel errorResponse = new ValidationErrorResponseModel();
         errorResponse.setMessage("Validation failed");
         errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
 
@@ -45,10 +45,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ValidationErrorResponse> handleConstraintViolationException(
+    public ResponseEntity<ValidationErrorResponseModel> handleConstraintViolationException(
             ConstraintViolationException ex) {
 
-        ValidationErrorResponse errorResponse = new ValidationErrorResponse();
+        ValidationErrorResponseModel errorResponse = new ValidationErrorResponseModel();
         errorResponse.setMessage("Validation failed");
         errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
 
@@ -67,10 +67,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateAccountException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ErrorResponse> handleDuplicateAccountException(
+    public ResponseEntity<ErrorResponseModel> handleDuplicateAccountException(
             DuplicateAccountException ex) {
 
-        ErrorResponse errorResponse = new ErrorResponse();
+        ErrorResponseModel errorResponse = new ErrorResponseModel();
         errorResponse.setMessage(ex.getMessage());
         errorResponse.setStatus(HttpStatus.CONFLICT.value());
         errorResponse.setError("Duplicate Account");
@@ -81,15 +81,55 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleAccountNotFoundException(
+    public ResponseEntity<ErrorResponseModel> handleAccountNotFoundException(
             AccountNotFoundException ex) {
 
-        ErrorResponse errorResponse = new ErrorResponse();
+        ErrorResponseModel errorResponse = new ErrorResponseModel();
         errorResponse.setMessage(ex.getMessage());
         errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
         errorResponse.setError("Account Not Found");
         errorResponse.setTimestamp(LocalDateTime.now());
 
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidOperationTypeException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponseModel> handleInvalidOperationTypeException(
+            InvalidOperationTypeException ex) {
+
+        ErrorResponseModel errorResponse = new ErrorResponseModel();
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStatus(HttpStatus.CONFLICT.value());
+        errorResponse.setError("Invalid Operation Type");
+        errorResponse.setTimestamp(LocalDateTime.now());
+
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponseModel> handleIllegalArgumentException(IllegalArgumentException ex) {
+
+        ErrorResponseModel errorResponse = new ErrorResponseModel();
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setError("Bad Request");
+        errorResponse.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorResponseModel> handleGeneralException(Exception ex) {
+
+        ErrorResponseModel errorResponse = new ErrorResponseModel();
+        errorResponse.setMessage("An unexpected error occurred");
+        errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponse.setError("Internal Server Error");
+        errorResponse.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

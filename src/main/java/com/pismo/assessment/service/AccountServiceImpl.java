@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountById(Long accountId) throws AccountNotFoundException {
-        Optional<Account> existingAccount = this.accountRepository.findById(accountId);
+        Optional<Account> existingAccount = this.accountRepository.findByAccountId(accountId);
         if (existingAccount.isEmpty())  {
             throw new AccountNotFoundException(accountId);
         }

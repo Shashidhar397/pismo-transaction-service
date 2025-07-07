@@ -13,11 +13,11 @@ import lombok.Data;
 @Data
 public class CreateAccountRequestModel {
 
-    @JsonProperty("document_number")
     @NotNull(message = "Document number is required")
     @NotBlank(message = "Document number is required")
     @Pattern(regexp = "\\d{11}", message = "Document number must be 11 digits")
     @Valid
+    @JsonProperty("document_number")
     private String documentNumber;
 
 }

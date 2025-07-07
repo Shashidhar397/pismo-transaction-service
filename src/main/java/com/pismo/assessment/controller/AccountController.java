@@ -1,7 +1,7 @@
 package com.pismo.assessment.controller;
 
 import com.pismo.assessment.entity.Account;
-import com.pismo.assessment.model.AccountResponse;
+import com.pismo.assessment.model.AccountResponseModel;
 import com.pismo.assessment.model.CreateAccountRequestModel;
 import com.pismo.assessment.service.AccountService;
 import jakarta.validation.Valid;
@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 /**
  * @author shashi
@@ -26,16 +24,17 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-     @PostMapping
-     public ResponseEntity<AccountResponse> createAccount(@RequestBody @Valid CreateAccountRequestModel createAccountRequestModel) {
-         Account createdAccount = this.accountService.createAccount(createAccountRequestModel);
-         return ResponseEntity.status(HttpStatus.CREATED).body(AccountResponse.from(createdAccount));
-     }
+    @PostMapping
+    public ResponseEntity<AccountResponseModel> createAccount(
+            @RequestBody @Valid CreateAccountRequestModel createAccountRequestModel) {
+        Account createdAccount = this.accountService.createAccount(createAccountRequestModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(AccountResponseModel.from(createdAccount));
+    }
 
-     @GetMapping("/{account_id}")
-        public ResponseEntity<AccountResponse> getAccount(@PathVariable("account_id") Long accountId) {
-            Account account = this.accountService.getAccountById(accountId);
-            return ResponseEntity.ok(AccountResponse.from(account));
-        }
+    @GetMapping("/{account_id}")
+    public ResponseEntity<AccountResponseModel> getAccount(@PathVariable("account_id") Long accountId) {
+        Account account = this.accountService.getAccountById(accountId);
+        return ResponseEntity.ok(AccountResponseModel.from(account));
+    }
 
 }

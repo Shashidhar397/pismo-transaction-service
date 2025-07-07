@@ -12,7 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByDocumentNumber(String documentNumber);
 
-    @Override
-    Optional<Account> findById(Long id);
+    Optional<Account> findByAccountId(Long accountId);
 
 }
