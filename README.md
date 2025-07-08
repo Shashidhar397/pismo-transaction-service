@@ -26,11 +26,11 @@ This is a Spring Boot microservice for managing accounts and transactions.
 By default, the application supports hot reload when run via Docker Compose. Any changes to the source code on the host will be picked up automatically by the running container (requires Spring Boot DevTools and the correct volume mounts).
 
 ## API Documentation
-- Once running, access Swagger UI at: `http://localhost:8080/swagger-ui.html`
+- Once running, access Swagger UI at: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui/index.html)
 
 ## Database
 - The application uses Flyway for DB migrations. SQL scripts are in `src/main/resources/db/migration`.
 
 ## Health Check
 - Spring Boot Actuator endpoints are enabled
-- Health check endpoint: `http://localhost:8080/actuator/health`
+- Health check endpoint: [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
