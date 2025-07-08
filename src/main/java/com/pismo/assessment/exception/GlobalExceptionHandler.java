@@ -106,11 +106,11 @@ public class GlobalExceptionHandler {
 
         ErrorResponseModel errorResponse = new ErrorResponseModel();
         errorResponse.setMessage(ex.getMessage());
-        errorResponse.setStatus(HttpStatus.CONFLICT.value());
+        errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
         errorResponse.setError("Invalid Operation Type");
         errorResponse.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -133,7 +133,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseModel> handleGeneralException(Exception ex) {
 
         ErrorResponseModel errorResponse = new ErrorResponseModel();
-        errorResponse.setMessage("An unexpected error occurred");
+        errorResponse.setMessage(ex.getMessage());
         errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         errorResponse.setError("Internal Server Error");
         errorResponse.setTimestamp(LocalDateTime.now());

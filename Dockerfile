@@ -9,6 +9,9 @@ RUN mvn dependency:go-offline
 # Copy the rest of the source code
 COPY src ./src
 
+# Run tests to ensure code quality before starting
+RUN mvn test
+
 # Expose port (default Spring Boot port)
 EXPOSE 8080
 

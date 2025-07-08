@@ -37,11 +37,11 @@ public class TransactionServiceImpl implements TransactionService {
             throw new IllegalArgumentException("Transaction amount cannot be zero");
         }
         Long accountId = createTransactionRequestModel.getAccountId();
-        Account account = accountRepository.findById(accountId)
+        Account account = accountRepository.findByAccountId(accountId)
             .orElseThrow(() -> new AccountNotFoundException(accountId));
 
         Long operationTypeId = createTransactionRequestModel.getOperationTypeId();
-        OperationType operationType = operationTypeRepository.findById(operationTypeId)
+        OperationType operationType = operationTypeRepository.findByOperationTypeId(operationTypeId)
             .orElseThrow(() -> new InvalidOperationTypeException(operationTypeId));
 
         Transaction transaction = new Transaction(createTransactionRequestModel.getAmount(), account, operationType);

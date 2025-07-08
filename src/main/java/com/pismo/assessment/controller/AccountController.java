@@ -34,7 +34,7 @@ public class AccountController {
             summary = "Create a new account",
             description = "Creates a new financial account for the specified document number",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Account created successfully",
+                    @ApiResponse(responseCode = "201", description = "Account created successfully",
                             content = @Content(schema = @Schema(implementation = AccountResponseModel.class))),
                     @ApiResponse(responseCode = "400", description = "Invalid input data",
                             content = @Content(schema = @Schema(implementation = ValidationErrorResponseModel.class))),

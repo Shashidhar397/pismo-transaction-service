@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,7 @@ public class TransactionController {
             summary = "Create a new transaction",
             description = "Creates a new financial transaction for the specified account",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Transaction created successfully",
+                    @ApiResponse(responseCode = "201", description = "Transaction created successfully",
                             content = @Content(schema = @Schema(implementation = TransactionResponseModel.class))),
                     @ApiResponse(responseCode = "400", description = "Invalid input data",
                             content = @Content(schema = @Schema(implementation = ValidationErrorResponseModel.class))),
@@ -49,6 +50,6 @@ public class TransactionController {
     )
     public ResponseEntity<TransactionResponseModel> createTransaction(@RequestBody @Valid CreateTransactionRequestModel createTransactionRequestModel) {
         Transaction transaction = this.transactionService.createTransaction(createTransactionRequestModel);
-        return ResponseEntity.ok(TransactionResponseModel.fromTransaction(transaction));
+        return ResponseEntity.status(HttpStatus.CREATED).body(TransactionResponseModel.fromTransaction(transaction));
     }
 }
