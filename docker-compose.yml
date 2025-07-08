@@ -2,7 +2,12 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    image: maven:3.9.6-eclipse-temurin-17
+    working_dir: /app
+    command: mvn spring-boot:run -Dspring-boot.run.fork=false
+    volumes:
+      - ./src:/app/src
+      - ./:/app
     ports:
       - "8080:8080"
     environment:

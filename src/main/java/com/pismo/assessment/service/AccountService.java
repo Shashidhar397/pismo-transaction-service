@@ -5,8 +5,6 @@ import com.pismo.assessment.exception.AccountNotFoundException;
 import com.pismo.assessment.exception.DuplicateAccountException;
 import com.pismo.assessment.model.CreateAccountRequestModel;
 
-import java.util.Optional;
-
 /**
  * @author shashi
  */

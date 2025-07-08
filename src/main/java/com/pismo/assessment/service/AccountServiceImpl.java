@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * @author shashi
@@ -18,6 +19,8 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
+    private static final Logger LOGGER = Logger.getLogger(AccountServiceImpl.class.getName());
+
     public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
@@ -26,8 +29,11 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Account createAccount(CreateAccountRequestModel createAccountRequestModel) throws DuplicateAccountException {
 
+        LOGGER.info("Creating account with document number: " + createAccountRequestModel.getDocumentNumber());
+
         Optional<Account> existingAccount = this.accountRepository.findByDocumentNumber(createAccountRequestModel.getDocumentNumber());
         if (existingAccount.isPresent()) {
+            LOGGER.warning("Account with document number " + createAccountRequestModel.getDocumentNumber() + " already exists.");
             throw new DuplicateAccountException(createAccountRequestModel.getDocumentNumber());
         }
 
